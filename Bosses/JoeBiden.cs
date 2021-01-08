@@ -16,6 +16,7 @@ namespace Joe303Mod.Bosses {
     class JoeBiden : ModNPC
     {
         private bool hitOwie;
+        private double frameCooldown;
 
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Joe Biden");
@@ -26,8 +27,9 @@ namespace Joe303Mod.Bosses {
         {
             //11 is Skeleton's head, dungeon guardian
 
-            //npc.aiStyle = 31;
-            npc.aiStyle = -1;
+            hitOwie = false;
+            npc.aiStyle = 11;
+            //npc.aiStyle = -1;
             npc.life = 3030;
             npc.lifeMax = 3030;
             npc.damage = 5; //base damage value boss on Normal
@@ -43,46 +45,42 @@ namespace Joe303Mod.Bosses {
             npc.noTileCollide = true; //will not collide with the tiles.
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
-            //LegacySoundStyle style = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Joe303BossTheme");
-            //style.SoundId
-            //music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Joe303BossTheme");
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Joe303BossTheme");
 
-            //mod.Logger.InfoFormat("Music id is: {0}" , music.ToString());
-            music = MusicID.Boss1;
-            //npc.DeathSound = new LegacySoundStyle(0, 1, SoundType.Music);
+            mod.Logger.InfoFormat("Music id is: {0}" , music.ToString());
         }
 
-        public override void FindFrame(int frameHeight)
-        {
+        // Assume 30 frames per second (which is probably wrong)
+        public override void FindFrame(int frameHeight) {
             npc.frameCounter += 1.0;
+            npc.frameCounter %= 60.0;
             npc.spriteDirection = npc.direction;
-            
-            //if (npc.frameCounter / 2.0);
-            //if (frame >= Main.npcFrameCount[npc.type]) frame = 0;
 
-            if (hitOwie)
-            {
+            if (hitOwie && frameCooldown >= 0) {
                 mod.Logger.InfoFormat("HIT OWIE");
                 npc.frame.Y = frameHeight * 3;
-            }
-            else
-            {
-                npc.frameCounter %= 2.0;
-                if (npc.frameCounter < 1.0) {
+                // hold for 5 seconds
+                frameCooldown -= 1.0;
+            } else {
+                frameCooldown = 5.0 * 60.0;
+                // First 15 frames show as one frame
+                if (npc.frameCounter < 30.0) {
+                    npc.frame.Y = 0;
+                }
+                // Next 15 show as second frame
+                else {
                     npc.frame.Y = frameHeight;
-                } else {
-                    npc.frame.Y = frameHeight * 2;
                 }
             }
         }
 
         public override void AI()
         {
-            Terraria.Player player = Main.player[npc.target];
-            npc.SimpleFlyMovement(npc.DirectionTo(player.position + new Vector2((float)(-(double)npc.ai[2] * 300.0), -200f)) * 7.5f, 1.5f);
+            //Terraria.Player player = Main.player[npc.target];
+            //npc.SimpleFlyMovement(npc.DirectionTo(player.position + new Vector2((float)(-(double)npc.ai[2] * 300.0), -200f)) * 7.5f, 1.5f);
 
             mod.Logger.InfoFormat("Health is: {0}", npc.life);
-            if (npc.life <= 1500) 
+            /*if (npc.life <= 1500) 
             {
                 hitOwie = true;
             }
@@ -92,10 +90,7 @@ namespace Joe303Mod.Bosses {
                 //unload music
                 SoundEffect currSound = mod.GetSound("Sounds/Music/Joe303BossTheme");
                 currSound.Dispose();
-                //SoundEffectInstance currSoundInstance Soun
-                //Main.GetActiveSound(mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Joe303BossTheme")).Stop();
-
-            }
+            }*/
 
             base.AI();
         }

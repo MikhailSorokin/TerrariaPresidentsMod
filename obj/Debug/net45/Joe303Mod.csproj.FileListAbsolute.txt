@@ -1,6 +1,7 @@
-C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\obj\Debug\net45\Joe303Mod.csproj.CoreCompileInputs.cache
+C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\obj\Debug\net45\Joe303Mod.csprojAssemblyReference.cache
 C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\obj\Debug\net45\Joe303Mod.AssemblyInfoInputs.cache
 C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\obj\Debug\net45\Joe303Mod.AssemblyInfo.cs
+C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\obj\Debug\net45\Joe303Mod.csproj.CoreCompileInputs.cache
 C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\Joe303Mod.dll
 C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\Joe303Mod.pdb
 C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\Ionic.Zip.Reduced.dll
@@ -20,13 +21,12 @@ C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\De
 C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\ReLogic.dll
 C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\Steamworks.NET.dll
 C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\System.ValueTuple.dll
-C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\Terraria.exe
 C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\TerrariaHooks.dll
-C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\Terraria.pdb
-C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\Terraria.xml
+C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\tModLoader.exe
+C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\tModLoader.pdb
+C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\tModLoader.xml
 C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\MonoMod.RuntimeDetour.xml
 C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\bin\Debug\net45\MonoMod.Utils.xml
 C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\obj\Debug\net45\Joe303Mod.csproj.CopyComplete
 C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\obj\Debug\net45\Joe303Mod.dll
 C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\obj\Debug\net45\Joe303Mod.pdb
-C:\Users\Mike\Documents\My Games\Terraria\ModLoader\Mod Sources\Joe303Mod\obj\Debug\net45\Joe303Mod.csprojAssemblyReference.cache
