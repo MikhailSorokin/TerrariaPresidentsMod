@@ -3,7 +3,7 @@ Alternate between sprite index 0 and 1 - DONE
 Put in Joe music. PUT IN, but unloading causes problems on looping.
 Mimics skeleton boss - DONE
 
-Put in correct pixel sheet width and height.
+Put in correct pixel sheet width and height. DONE
 
 Create sprite and weapons for each major president:
 - George Washington. Musket rifle and he can ride a horse. Will mimic headless horsemen npc look.

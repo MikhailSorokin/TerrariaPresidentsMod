@@ -17,10 +17,21 @@ namespace Joe303Mod.Bosses {
     {
         private bool hitOwie;
         private double frameCooldown;
+        private float moveTimer;
 
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Joe Biden");
             Main.npcFrameCount[npc.type] = 4;
+        }
+
+        public override int SpawnNPC(int tileX, int tileY)
+        {
+            npc.FaceTarget();
+            Terraria.Player player = Main.player[npc.target];
+
+            npc.position = player.Center + new Vector2(0, -100);
+
+            return base.SpawnNPC(tileX, tileY);
         }
 
         public override void SetDefaults()
@@ -28,18 +39,20 @@ namespace Joe303Mod.Bosses {
             //11 is Skeleton's head, dungeon guardian
 
             hitOwie = false;
-            npc.aiStyle = 11;
-            //npc.aiStyle = -1;
+            //npc.aiStyle = 11;
+            npc.aiStyle = -1;
             npc.life = 3030;
             npc.lifeMax = 3030;
             npc.damage = 5; //base damage value boss on Normal
             npc.defense = 25;
-            npc.knockBackResist = 0f;
+            npc.knockBackResist = 5f;
             npc.width = 140;
             npc.height = 145;
             npc.value = Item.buyPrice(1, 0, 0, 0);
             npc.npcSlots = 1f;
             npc.boss = true;
+            npc.stinky = true;
+
             npc.lavaImmune = true;
             npc.noGravity = true;
             npc.noTileCollide = true; //will not collide with the tiles.
@@ -54,7 +67,7 @@ namespace Joe303Mod.Bosses {
         public override void FindFrame(int frameHeight) {
             npc.frameCounter += 1.0;
             npc.frameCounter %= 60.0;
-            npc.spriteDirection = npc.direction;
+            npc.spriteDirection = -npc.direction;
 
             if (hitOwie && frameCooldown >= 0) {
                 mod.Logger.InfoFormat("HIT OWIE");
@@ -62,7 +75,7 @@ namespace Joe303Mod.Bosses {
                 // hold for 5 seconds
                 frameCooldown -= 1.0;
             } else {
-                frameCooldown = 5.0 * 60.0;
+	            hitOwie = false;
                 // First 15 frames show as one frame
                 if (npc.frameCounter < 30.0) {
                     npc.frame.Y = 0;
@@ -73,13 +86,53 @@ namespace Joe303Mod.Bosses {
                 }
             }
         }
+        
+        private float shootCooldown = 2f * 60;
 
         public override void AI()
         {
-            //Terraria.Player player = Main.player[npc.target];
-            //npc.SimpleFlyMovement(npc.DirectionTo(player.position + new Vector2((float)(-(double)npc.ai[2] * 300.0), -200f)) * 7.5f, 1.5f);
+            npc.TargetClosest(true);
+            
+            Terraria.Player player = Main.player[npc.target];
 
+            // Set the direction towards the player
+            Vector2 moveTo = player.Center - npc.Center;
+
+            if (moveTimer != 0)
+            {
+                npc.velocity = moveTo / 300f;
+            }
+
+            if (moveTimer <= 0) {
+                moveTimer += 0.1f;
+                if (moveTimer >= 3f)
+                {
+                    moveTimer = 0;
+                }
+                npc.netUpdate = true;
+            }
+   
             mod.Logger.InfoFormat("Health is: {0}", npc.life);
+
+            shootCooldown += 1f;
+            if (shootCooldown >= 2f*60)
+            {
+	            // Calculate new speeds for other projectiles.
+	            // Rebound at 40% to 70% speed, plus a random amount between -8 and 8
+	            float speedX = -120f * Main.rand.NextFloat(.4f, .7f) + Main.rand.NextFloat(-8f, 8f);
+	            float speedY =
+		            -120f * Main.rand.Next(40, 70) * 0.01f +
+		            Main.rand.Next(-20, 21) * 0.4f; // This is Vanilla code, a little more obscure.
+
+	            Projectile.NewProjectile(npc.position.X, npc.position.Y, speedX, speedY, ProjectileID.EyeLaser, 3, 0.3f,
+		            Main.myPlayer, 0f, 0f);
+
+	            frameCooldown = 0.5 * 60.0;
+	            hitOwie = true;
+	            
+	            shootCooldown = 0f;
+            }
+
             /*if (npc.life <= 1500) 
             {
                 hitOwie = true;
@@ -94,6 +147,56 @@ namespace Joe303Mod.Bosses {
 
             base.AI();
         }
+
+        private float laser1;
+        private float laser2;
+        private float laserTimer;
+        
+        /*private void ExpertLaser() {
+        	laserTimer--;
+        	if (laserTimer <= 0 && Main.netMode != 1) {
+        		if (npc.localAI[0] == 2f) {
+        			int laser1Index;
+        			int laser2Index;
+        			if (laser1 < 0) {
+        				laser1Index = npc.whoAmI;
+        			}
+        			else {
+        				for (laser1Index = 0; laser1Index < 200; laser1Index++) {
+        					if (laser1 == Main.npc[laser1Index].ai[1]) {
+        						break;
+        					}
+        				}
+        			}
+        			if (laser2 < 0) {
+        				laser2Index = npc.whoAmI;
+        			}
+        			else {
+        				for (laser2Index = 0; laser2Index < 200; laser2Index++) {
+        					if (laser2 == Main.npc[laser2Index].ai[1]) {
+        						break;
+        					}
+        				}
+        			}
+        			Vector2 pos = Main.npc[laser1Index].Center;
+        			int damage = Main.npc[laser1Index].damage / 2;
+        			if (Main.expertMode) {
+        				damage = (int)(damage / Main.expertDamage);
+        			}
+        			Projectile.NewProjectile(pos.X, pos.Y, 0f, 0f, ProjectileType<ElementLaser>(), damage, 0f, Main.myPlayer, laser1Index, laser2Index);
+        		}
+        		else {
+        			npc.localAI[0] = 2f;
+        		}
+        		laserTimer = 500 + Main.rand.Next(100);
+        		laserTimer = 60 + laserTimer * npc.life / npc.lifeMax;
+        		laser1 = Main.rand.Next(6) - 1;
+        		laser2 = Main.rand.Next(5) - 1;
+        		if (laser2 >= laser1) {
+        			laser2++;
+        		}
+        	}
+        }*/
 
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
