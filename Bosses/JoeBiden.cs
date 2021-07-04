@@ -100,7 +100,7 @@ namespace Joe303Mod.Bosses {
 
             if (moveTimer != 0)
             {
-                npc.velocity = moveTo / 300f;
+                npc.velocity = moveTo / 200f;
             }
 
             if (moveTimer <= 0) {
